@@ -1,0 +1,10 @@
+.entry {
+    display: flex;
+    flex: auto;
+    border-bottom: 1px solid var(--acccent-color);;
+}
+
+.entry span {
+    color: var(--text-color);
+    width: 50%;
+}

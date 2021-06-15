@@ -1,0 +1,17 @@
+{
+    "category": "Bits",
+    "entries": [
+        { 
+            "username": "bob",
+            "value": 42
+        },
+        { 
+            "username": "jon",
+            "value": 69
+        },
+        { 
+            "username": "ann",
+            "value": 34893720958
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "category": "Gifted Subs",
+    "entries": [
+        { 
+            "username": "bob",
+            "value": 4
+        },
+        { 
+            "username": "jon",
+            "value": 6
+        },
+        { 
+            "username": "ann",
+            "value": 34
+        }
+    ]
+}
