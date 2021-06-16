@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "type": "module",
   "main": "index.js",
+  "homepage": "http://tme321.github.io/user-rankings",
   "scripts": {
     "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
@@ -15,7 +16,9 @@
     "prebundle": "node \"./tools/bundle/pre-bundle.js\"",
     "bundle": "echo \"building...\" && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./tools/bundle/bundle.ps1",
     "postbundle": "node \"./tools/bundle/post-bundle.js\"",
-    "create-cert": "echo \"creating cert...\" && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./tools/cert/create-cert.ps1"
+    "create-cert": "echo \"creating cert...\" && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./tools/cert/create-cert.ps1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -63,5 +66,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.1"
   }
 }
