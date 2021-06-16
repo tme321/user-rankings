@@ -1,10 +1,8 @@
 .entries {
-    padding-top:100px;
     color: var(--text-color);
-    min-height: 300px;
-    max-height: 500px;
-    max-width: 500px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 340px;
 }
 
 .entries span {
@@ -17,12 +15,7 @@
     flex-direction: column;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
-
-    max-height: 300px;
-    max-width: 500px;
-
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .entries li {

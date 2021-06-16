@@ -19,29 +19,12 @@ function App() {
       setIsLoading(true);
       
       await sleep(1000);
-      //const result = await axios(url);
+
       const result = await Promise.resolve(
         require("./test/giftedSubs.test.json")
       );
-        /*{
-        "category": "Bits",
-        "entries": [
-            { 
-                "username": "bob",
-                "value": "42"
-            },
-            { 
-                "username": "jon",
-                "value": "69"
-            },
-            { 
-                "username": "ann",
-                "value": "34893720958"
-            }
-        ]
-      });*/
 
-      setData({ data: result, config: { dataUrl: '', titleText: "Any Random Text", titleUrl: "/Cutom-Img.png" } });
+      setData({ data: result, config: { dataUrl: '', titleText: "Hall of Fame" } });
       setIsLoading(false);
     };
  

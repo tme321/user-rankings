@@ -2,7 +2,7 @@ import './RankingsHeader.css';
 import { AppState } from '../../App.state';
 import { ConfigState } from '../../config/config.state';
 
-const TitleImg = (url:string) => (<h1><img className="title-img" src={url}/></h1>);
+const TitleImg = (url:string) => (<h1><img className="title-img" src={url} alt=""/></h1>);
 const TitleText = (txt:string) => (<h1>{txt}</h1>);
 
 const TitleHeader = (config: ConfigState) => (

@@ -3,6 +3,7 @@
 /dist
 /resources
 /.cert
+/.vscode
 
 # dependencies
 /node_modules
