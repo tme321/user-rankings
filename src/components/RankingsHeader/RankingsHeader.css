@@ -11,9 +11,20 @@
     font-size: 1.5em;
 }
 
-.header h2 {
+.categories-header div {
     font-size: 1em;
     display: flex;
+}
+
+.fixed {
+    position: fixed;
+    top:0;
+    background-color: var(--background-color);
+    z-index: 5000;
+    display: block;
+
+    margin: 0;
+    padding: 0;
 }
 
 .header span {

@@ -1,7 +1,5 @@
 .entries {
     color: var(--text-color);
-    overflow-x: hidden;
-    overflow-y: auto;
     max-height: 340px;
 }
 

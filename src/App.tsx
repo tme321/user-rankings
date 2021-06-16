@@ -24,7 +24,13 @@ function App() {
         require("./test/giftedSubs.test.json")
       );
 
-      setData({ data: result, config: { dataUrl: '', titleText: "Hall of Fame" } });
+      setData({ 
+        data: result, 
+        config: { dataUrl: '', 
+          titleText: "Hall of Fame",
+          titleUrl: "/Cutom-Img.png" 
+        } 
+      });
       setIsLoading(false);
     };
  
