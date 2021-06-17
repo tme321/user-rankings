@@ -3,38 +3,53 @@ import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
 import { AppState } from '../../App.state';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { ColoredScrollbars } from '../ColoredScrollbar/ColoredScrollbar.component';
 
+/**
+ * @description The layout component is responsible for orchestrating the
+ * layout of the entire extension.
+ * @param props The entire AppState is passed to the layout to divide
+ * between the headers and the content body.
+ */
 export function Layout(props: AppState) {
-    const [isColumnHeadersTop, setColumnHeadersTop] = useState(false);
+    /**
+     * Track when the column headers should become sticky
+     * to the top of the view or should attach themselves to
+     * the bottom of the title box.
+     */
 
-    const handleScrolling = (event:any) => { 
-        if(!isColumnHeadersTop && event.target.scrollTop >= 130) {
-            console.log("add class");
+    const [isColumnHeadersTop, setColumnHeadersTop] = useState(false);
+    const [titleHeight, setTitleHeight] = useState(1000);
+
+    /**
+     * Hit testing for the column headers.
+     */
+    const handleScrolling = (event: any) => { 
+        if(!isColumnHeadersTop && event.target.scrollTop >= titleHeight) {
             setColumnHeadersTop(true);
         }
-        else if(isColumnHeadersTop && event.target.scrollTop < 130) {
-            console.log("remove class");
+        else if(isColumnHeadersTop && event.target.scrollTop < titleHeight) {
             setColumnHeadersTop(false);
         } 
     };
 
-    /*
-    const ref = useRef<HTMLHeadingElement>(null);
-    
-    useEffect(() => {
-        console.log('width', ref.current ? ref.current.clientWidth : 0);
-    }, [ref.current]);
-    */
+    /**
+     * Determine the width to use for the column headers when
+     * they transition to fixed position. 
+     */
 
-    const [layoutWidth, setLayoutWidth] = useState(0);
+    const [layoutWidth, setLayoutWidth] = useState(1100);
     const layoutDiv = useCallback(node => {
         if (node !== null) {
             console.log("width: ", node.clientWidth);
             setLayoutWidth(node.clientWidth);
         }
     }, []);
-    
+
+    /**
+     * Make props for the header 
+     */
 
     const rhProps: RankingsHeaderProps = {
         isColumnHeadersTop: isColumnHeadersTop,
@@ -42,12 +57,18 @@ export function Layout(props: AppState) {
         titleText: props.config.titleText,
         titleUrl: props.config.titleUrl,
         headerUrl: props.config.headerUrl,
-        layoutWidth: layoutWidth
+        layoutWidth: layoutWidth,
+        setTitleHeight: setTitleHeight
     }
+    
 
     return (
-        <div className="layout" ref={layoutDiv} onScroll={handleScrolling}>
-            <RankingsHeader {...rhProps}/>
-            <RankingsTable model={props.data} />
-        </div>);
+        <ColoredScrollbars style={{ height: 500 }}
+            onScroll={handleScrolling}>
+            <div className="layout" ref={layoutDiv} >
+                <RankingsHeader {...rhProps}/>
+                <RankingsTable model={props.data} />
+            </div>
+        </ColoredScrollbars>
+    );
 }

@@ -5,4 +5,5 @@ export interface RankingsHeaderProps {
     titleUrl?: string;
     headerUrl?: string;
     layoutWidth: number;
+    setTitleHeight: (height: number)=>void;
 }

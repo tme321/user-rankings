@@ -5,8 +5,6 @@ import { Layout } from './components/Layout/Layout.component';
 import { Loading } from './components/Loading/Loading.component';
 import { AppState } from './App.state';
 
-//import * as giftedSubs from '../public/giftedSubs.test.json';
-
 const defaultState: AppState = { data: { category: 'default', entries: [] }, config: { dataUrl: '' } };
 
 function App() {
@@ -27,8 +25,7 @@ function App() {
       setData({ 
         data: result, 
         config: { dataUrl: '', 
-          titleText: "Hall of Fame",
-          titleUrl: "/Cutom-Img.png" 
+          titleText: "Hall of Fame"
         } 
       });
       setIsLoading(false);
@@ -50,11 +47,6 @@ function App() {
 
 export default App;
 
-
-/*
-      
-
-*/
 
 function sleep(ms: number) {
   // add ms millisecond timeout before promise resolution
