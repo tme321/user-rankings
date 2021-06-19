@@ -9,7 +9,11 @@ export function ColumnsHeader ({ category , isColumnHeadersTop, width }: {
     width: number
 }) {
     return (
-        <h2 className={isColumnHeadersTop?"categories-header fixed" : "categories-header"}
+        <h2 className={
+                isColumnHeadersTop?
+                    "categories-header fixed" : 
+                    "categories-header"
+                }
             style={ {width: width} }>
             <div>
                 <span>User Name</span>

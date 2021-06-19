@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import { Layout } from './components/Layout/Layout.component';
-import { Loading } from './components/Loading/Loading.component';
+import { ViewerLayout } from './ViewerExtension/components/ViewerLayout/ViewerLayout.component';
+import { Loading } from './ViewerExtension/components/Loading/Loading.component';
 import { AppState } from './App.state';
+import { registerContextListener } from './shared/services/TwitchContext/TwitchContext.service';
 
 const defaultState: AppState = { data: { category: 'default', entries: [] }, config: { dataUrl: '' } };
+
+const lightMode = 'light-mode';
+const darkMode = 'dark-mode';
 
 function App() {
   const [data, setData] = useState<AppState>(defaultState);
@@ -33,15 +37,32 @@ function App() {
  
     fetchData();
   }, [url]);
+
+  const [theme, setTheme] = useState<string>(darkMode);
+
+  useEffect(() => {
+    console.log('context use effect');
+    registerContextListener((context, changed)=>{
+      if(changed.includes('theme')) {
+        if(context.theme === 'light') {
+          setTheme(lightMode);
+        }
+        if(context.theme === 'dark') {
+          setTheme(darkMode);
+        }
+      }
+    });
+  }, []);
+  
     
   return (
-    <>
+    <div className={`app-container ${theme}`}>
       {
         isLoading? 
           <Loading/>: 
-          <Layout {...data}></Layout>
+          <ViewerLayout {...data}></ViewerLayout>
       }
-    </>
+    </div>
   );
 }
 

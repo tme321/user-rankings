@@ -14,6 +14,11 @@
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     overflow: hidden;
+
+}
+
+.entries li:nth-child(even) {
+    color: darkgrey;
 }
 
 .entries li {

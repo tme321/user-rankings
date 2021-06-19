@@ -1,18 +1,18 @@
-import './Layout.css';
+import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
-import { AppState } from '../../App.state';
+import { AppState } from '../../../App.state';
 import { useCallback, useState } from 'react';
-import { ColoredScrollbars } from '../ColoredScrollbar/ColoredScrollbar.component';
+import { ColoredScrollbars } from '../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
 
 /**
- * @description The layout component is responsible for orchestrating the
- * layout of the entire extension.
+ * @description The viewer layout component is responsible for orchestrating the
+ * layout of the entire extension in viewer mode.
  * @param props The entire AppState is passed to the layout to divide
  * between the headers and the content body.
  */
-export function Layout(props: AppState) {
+export function ViewerLayout(props: AppState) {
     /**
      * Track when the column headers should become sticky
      * to the top of the view or should attach themselves to

@@ -1,4 +1,4 @@
-import { DataState } from '../data/data.state';
+import { DataState } from '../shared/data/data.state';
 import { HttpClient } from './http-client.model';
 import axios from "axios";
 

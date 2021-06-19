@@ -1,0 +1,23 @@
+.light-mode {
+    --background-color: #fff;
+    --acccent-color: #6441A4;
+    --text-color: #232127;
+    --link-color: #6441A4;
+    --text-overlay-color: #e5e3e8;
+}
+  
+.dark-mode {
+    --background-color: #201c2b;
+    --acccent-color: #6441A4;
+    --text-color: #e5e3e8;
+    --link-color: #e2dbf0;
+    --text-overlay-color: #e5e3e8;
+}
+
+.app-container {
+    height: 100%;
+    width: 100%;    
+    text-align: center;
+    background-color: var(--background-color);
+    color: var(--acccent-color);
+}
