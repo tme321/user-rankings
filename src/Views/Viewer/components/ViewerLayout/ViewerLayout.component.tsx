@@ -2,9 +2,9 @@ import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
-import { AppState } from '../../../App.state';
+import { AppState } from '../../../../App.state';
 import { useCallback, useState } from 'react';
-import { ColoredScrollbars } from '../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
+import { ColoredScrollbars } from '../../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
 
 /**
  * @description The viewer layout component is responsible for orchestrating the

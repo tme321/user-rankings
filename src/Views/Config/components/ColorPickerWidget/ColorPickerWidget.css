@@ -1,0 +1,13 @@
+.color-picker-widget {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+}
+
+.color-picker-widget > * {
+    width: 50%;
+}
+
+.color-picker-widget label {
+    text-align: right;
+}

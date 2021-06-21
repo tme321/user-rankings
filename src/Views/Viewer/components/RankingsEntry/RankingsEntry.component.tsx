@@ -1,5 +1,5 @@
 import './RankingsEntry.css';
-import { DataEntry } from "../../../shared/data/data.state";
+import { DataEntry } from "../../../../shared/data/data.state";
 
 /** 
  * @description A single table entry of the rankings.

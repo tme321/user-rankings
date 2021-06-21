@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import { ViewerLayout } from './ViewerExtension/components/ViewerLayout/ViewerLayout.component';
-import { Loading } from './ViewerExtension/components/Loading/Loading.component';
 import { AppState } from './App.state';
-import { registerContextListener } from './shared/services/TwitchContext/TwitchContext.service';
+import { registerContextHandlers } from './shared/services/TwitchContext/TwitchContext.service';
+import { Loading } from './Views/Loading/Loading.component';
+import { ViewerLayout } from './Views/Viewer/components/ViewerLayout/ViewerLayout.component';
+import { ConfigLayout } from './Views/Config/components/ConfigLayout/ConfigLayout.component';
+import { DashboardLayout } from './Views/Dashboard/components/DashboardLayout/DashboardLayout.component';
 
 const defaultState: AppState = { data: { category: 'default', entries: [] }, config: { dataUrl: '' } };
 
 const lightMode = 'light-mode';
 const darkMode = 'dark-mode';
+
+type ViewModes = 'viewer' | 'dashboard' | 'config';
 
 function App() {
   const [data, setData] = useState<AppState>(defaultState);
@@ -38,35 +42,51 @@ function App() {
     fetchData();
   }, [url]);
 
-  const [theme, setTheme] = useState<string>(darkMode);
+  const [appTheme, setAppTheme] = useState<string>(darkMode);
+  const [appMode, setAppMode] = useState<ViewModes>('config');
 
-  useEffect(() => {
-    console.log('context use effect');
-    registerContextListener((context, changed)=>{
-      if(changed.includes('theme')) {
-        if(context.theme === 'light') {
-          setTheme(lightMode);
-        }
-        if(context.theme === 'dark') {
-          setTheme(darkMode);
-        }
-      }
-    });
-  }, []);
+  const renderLayout = (layoutMode: ViewModes) => {
+    switch(layoutMode) {
+      case 'config': { return (<ConfigLayout/>) }
+      case 'dashboard': { return (<DashboardLayout/>) }
+      case 'viewer': { return (<ViewerLayout {...data}/>) }
+    }
+  }
   
+
+  /**
+   * Twitch Context Handlers
+   */
+  useEffect(() => {
+    registerContextHandlers({
+      theme:(newTheme)=>{
+        switch(newTheme){
+          case 'light':{
+            setAppTheme(lightMode);
+            break;
+          }
+          case 'dark':{
+            setAppTheme(darkMode);
+            break;
+          }        
+        }
+      },
+      mode:(newMode)=>setAppMode(newMode as ViewModes)
+    });    
+  }, []);
     
   return (
-    <div className={`app-container ${theme}`}>
+    <div className={`app-container ${appTheme}`}>
       {
         isLoading? 
-          <Loading/>: 
-          <ViewerLayout {...data}></ViewerLayout>
+          <Loading/>:
+          renderLayout(appMode)
       }
     </div>
   );
 }
 
-export default App;
+
 
 
 function sleep(ms: number) {
@@ -75,3 +95,4 @@ function sleep(ms: number) {
 }
 
 
+export default App;

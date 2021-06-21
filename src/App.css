@@ -2,6 +2,7 @@
     --background-color: #fff;
     --acccent-color: #6441A4;
     --text-color: #232127;
+    --alt-text-color: #404040;
     --link-color: #6441A4;
     --text-overlay-color: #e5e3e8;
 }
@@ -10,6 +11,7 @@
     --background-color: #201c2b;
     --acccent-color: #6441A4;
     --text-color: #e5e3e8;
+    --alt-text-color: #b5b3b8;
     --link-color: #e2dbf0;
     --text-overlay-color: #e5e3e8;
 }

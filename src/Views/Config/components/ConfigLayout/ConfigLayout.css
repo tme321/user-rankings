@@ -1,0 +1,23 @@
+.layout {
+    color: var(--text-color);
+}
+
+.colors-container, .data-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.data-widget {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+}
+
+.data-widget > * {
+    width: 50%;
+}
+
+.data-widget label {
+    text-align: left;
+}

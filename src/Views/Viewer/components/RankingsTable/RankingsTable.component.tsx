@@ -1,5 +1,5 @@
 import './RankingsTable.css';
-import { DataState } from "../../../shared/data/data.state";
+import { DataState } from "../../../../shared/data/data.state";
 import { RankingsEntry } from "../RankingsEntry/RankingsEntry.component";
 
 /** 

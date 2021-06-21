@@ -18,7 +18,7 @@
 }
 
 .entries li:nth-child(even) {
-    color: darkgrey;
+    color: var(--alt-text-color);
 }
 
 .entries li {
