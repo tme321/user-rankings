@@ -1,5 +1,12 @@
 export type TwitchContextCallback<C,K extends keyof C> = (context: C,changed: readonly K[])=>void;
-export type TwitchContextHandlerMap<C,K extends keyof C> = Record<K,(val:NonNullable<C[K]>)=>void>;
+
+/**
+ * Extract the possible values of a twitch context entry
+ * and allow a context key to be mapped to a callback 
+ * whose parameter is the extracted possible values.
+ */
+export type TwitchContextHandlerMap<C> =
+{ [K in keyof C]: <V extends NonNullable<C[K]>>(val:V)=>void }
 
 function isNotNull<T>(val: T | null): val is NonNullable<T> {
     if (val === null || val === undefined ) {
@@ -8,9 +15,9 @@ function isNotNull<T>(val: T | null): val is NonNullable<T> {
     return true;
 }
 
-export const handleContextChanges =
+export const handleTwitchExtContextChanges =
     <C, K extends keyof C>
-    (handlers: TwitchContextHandlerMap<C,K>): TwitchContextCallback<C,K> => 
+    (handlers: TwitchContextHandlerMap<C>): TwitchContextCallback<C,K> => 
         (context, changed) => {
             changed.forEach(key=>{
                 if(handlers[key]) {
@@ -22,11 +29,11 @@ export const handleContextChanges =
             });
         }
 
-export function registerContextHandlers
+export function registerTwitchExtContextHandlers
     <C extends Partial<Twitch.ext.Context>,
      K extends keyof C>
-        (handlers: TwitchContextHandlerMap<C,K>) {
-            const contextCallback = handleContextChanges(handlers);
+        (handlers: TwitchContextHandlerMap<C>) {
+            const contextCallback = handleTwitchExtContextChanges(handlers);
             // small hack because the typings suck
             window.Twitch.ext.onContext(contextCallback as any);
 
@@ -55,3 +62,12 @@ export function registerContextHandlers
 
 }
 
+export function registerTwitchExtConfigHandler(callback:()=>void) {
+    window.Twitch.ext.configuration.onChanged(callback);
+    
+    
+}
+
+export function registerTwitchExtErrorHandler(errorCallback:(error: any)=>void) {
+    window.Twitch.ext.onError(errorCallback);
+}

@@ -1,46 +1,56 @@
+import React, { FormEvent, useContext, useState } from 'react';
 import './ConfigLayout.css'
 import { ColorPickerWidget } from '../ColorPickerWidget/ColorPickerWidget.component';
-import { DefaultColorsConfig } from '../../../../config/config.state';
+import { defaultColorModesConfig } from '../../../../Config//defaults/ColorModesConfig';
+import { RadioSelectGroup } from '../RadioSelectGroup/RadioSelectGroup.component';
+import { defaultConfigState } from '../../../../Config/defaults/ConfigState';
+import { ColorsContext } from '../../../../Context/Colors.context';
 
 export function ConfigLayout() {
-    return (
-        <div className="layout">
-            <h1><span>Configuration</span></h1>
-            <div className="colors-container">
-                <ColorPickerWidget label="Background Color:" color={DefaultColorsConfig.dark.background}/>
-                <ColorPickerWidget label="Accent Color:" color={DefaultColorsConfig.dark.acccent}/>
-                <ColorPickerWidget label="Text Color:" color={DefaultColorsConfig.dark.text}/>
-                <ColorPickerWidget label="Secondary Text Color:" color={DefaultColorsConfig.dark.altText}/>
-            </div>
-            <div className="data-container">
-                <div className="data-widget">
-                    <label>Data Url:</label><input/>
-                </div>
 
-            <div className="data-widget">
-                <div>
-                    <input type="radio" id="title-text" name="contact"/>
-                    <label htmlFor="title-text">Title Text:</label>
+    const theme = useContext(ColorsContext);
+
+    const [config, setConfig] = useState(defaultConfigState);
+
+    const ColorsRadioGroupContent = [{
+        content: (<input/>),
+        label: "Title Text:"
+    },
+    {
+        content: (<input/>),
+        label: "Title Url:"
+    },
+    {
+        content: (<input/>),
+        label: "Header Url:"
+    }]; 
+
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+    }
+
+    return (
+        <div className="config-layout" 
+            style={{ background: theme.background, color: theme.text }}>
+            <h1><span>Configuration</span></h1>
+            <form onSubmit={handleSubmit}>
+                <div className="colors-container">
+                    <ColorPickerWidget label="Background Color:" color={defaultColorModesConfig.dark.background}/>
+                    <ColorPickerWidget label="Accent Color:" color={defaultColorModesConfig.dark.acccent}/>
+                    <ColorPickerWidget label="Text Color:" color={defaultColorModesConfig.dark.text}/>
+                    <ColorPickerWidget label="Secondary Text Color:" color={defaultColorModesConfig.dark.altText}/>
                 </div>
-                <input disabled={false}/>
-            </div>
-            <div className="data-widget">
-                <div>
-                    <input type="radio" id="title-url" name="contact"/>
-                    <label htmlFor="title-url">Title Url:</label>
+                <div className="data-container">
+                    <div className="data-widget">
+                        <label>Data Url:</label><input/>
+                    </div>
+
+                    <RadioSelectGroup 
+                        groupName="header-behavior" 
+                        items={ColorsRadioGroupContent}/>
+                    
                 </div>
-                <input disabled/>
-            </div>
-            <div className="data-widget">
-                <div>
-                    <input type="radio" id="header-url" name="contact"/>
-                    <label htmlFor="header-url">Header Url:</label>
-                </div>
-                <input disabled/>
-            </div>                                
-                
-                
-            </div>
+            </form>
         </div>
     );
 }

@@ -1,6 +1,4 @@
 .load-container {
-    background-color: var(--background-color);
-    color: var(--text-color);
     height: 100%;
     width: 100%;
 }
@@ -17,7 +15,6 @@
   animation: indicator 1.8s infinite ease-in-out;
 }
 .indicator .loader {
-  color: var(--text-color);
   font-size: 10px;
   margin: auto;
   

@@ -9,10 +9,8 @@ h2.categories-header {
 .fixed {
     position: fixed;
     top:0;
-    background-color: var(--background-color);
     z-index: 100;
     display: block;
-
     margin: 0;
     padding: 0;
 }

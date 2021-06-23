@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import reactCSS from 'reactcss';
 import { SketchPicker, RGBColor, ColorResult } from 'react-color';
+import { ColorPickerButtonProps } from './ColorPickerButton.props';
 
 interface ColorPickerButtonState {
     displayColorPicker: boolean;
     color: RGBColor;
 }
 
-export function ColorPickerButton(props: any) {
+export function ColorPickerButton(props: ColorPickerButtonProps) {
     const [buttonState, setButtonState] = useState<ColorPickerButtonState>(()=>{
       const color = props.color ? 
         props.color:
@@ -19,7 +20,6 @@ export function ColorPickerButton(props: any) {
         };
       return { displayColorPicker: false, color: color };
     });
-    
 
     const handleClick = () => {
         setButtonState({ 
@@ -51,7 +51,7 @@ export function ColorPickerButton(props: any) {
                 background: `rgba(${ buttonState.color.r }, ${ buttonState.color.g }, ${ buttonState.color.b }, ${ buttonState.color.a })`,
             },
             swatch: {
-                padding: '5px',
+                padding: '2px',
                 background: '#fff',
                 borderRadius: '1px',
                 boxShadow: '0 0 0 1px rgba(0,0,0,.1)',

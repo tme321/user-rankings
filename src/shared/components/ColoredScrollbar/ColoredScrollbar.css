@@ -1,5 +1,4 @@
 .scrollbar {
     z-index : 2000;
-    background-color: var(--acccent-color);
     border-radius: 3px;
 }

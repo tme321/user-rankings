@@ -1,8 +1,8 @@
 import './ColorPickerWidget.css';
 import { ColorPickerButton } from '../ColorPickerButton/ColorPickerButton.component';
-import { RGBColor } from 'react-color';
+import { ColorPickerWidgetProps } from './ColorPickerWidget.props';
 
-export function ColorPickerWidget(props: { label: string, color?: RGBColor }) {
+export function ColorPickerWidget(props: ColorPickerWidgetProps) {
     return (
         <div className="color-picker-widget">
             <label>{props.label}</label><ColorPickerButton color={props.color}/>

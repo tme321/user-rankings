@@ -1,13 +1,4 @@
-.entries {
-    color: var(--text-color);
-    max-height: 340px;
-}
-
-.entries span {
-    width: 50%;
-}
-
-.entries ul {
+ul.entries  {
     display: flex;
     flex: auto;
     flex-direction: column;
@@ -15,13 +6,4 @@
     padding: 0 0 0 0;
     overflow: hidden;
 
-}
-
-.entries li:nth-child(even) {
-    color: var(--alt-text-color);
-}
-
-.entries li {
-    border-bottom: 1px solid var(--acccent-color);
-    margin-bottom: 5px;
 }

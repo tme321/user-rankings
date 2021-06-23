@@ -14,6 +14,7 @@ export class ColoredScrollbars extends
 
     constructor(props: ColoredScrollbarProps) {
         super(props);
+        console.log(props);
         this.state = { top: 0 };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.renderView = this.renderView.bind(this);
@@ -34,24 +35,25 @@ export class ColoredScrollbars extends
     }
 
     /**
-     * The scrollbar class implements the desired look and feel 
+     * The scrollbar class implements the desired look and feel
      */
     renderThumb({ style, ...props }: ColoredScrollbarProps) {
         return (
             <div className="scrollbar"
-                style={{ ...style }}
+                style={{ ...style, backgroundColor: this.props.thumbColor }}
                 {...props}/>
         );
     }
 
     render() {
+        const {thumbColor, ...props} = this.props;
         return (
             <Scrollbars
                 renderView={this.renderView}
                 renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
                 onUpdate={this.handleUpdate}
-                {...this.props}/>
+                {...props}/>
         );
     }
 }

@@ -1,49 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+//import axios from 'axios';
 import './App.css';
 import { AppState } from './App.state';
-import { registerContextHandlers } from './shared/services/TwitchContext/TwitchContext.service';
 import { Loading } from './Views/Loading/Loading.component';
 import { ViewerLayout } from './Views/Viewer/components/ViewerLayout/ViewerLayout.component';
 import { ConfigLayout } from './Views/Config/components/ConfigLayout/ConfigLayout.component';
 import { DashboardLayout } from './Views/Dashboard/components/DashboardLayout/DashboardLayout.component';
+import { ColorModesContextType, ColorsContext, modes } from './Context/Colors.context';
+import { useTwitchPanelExtension } from './shared/hooks/TwitchPanelExtension.hook';
+import { ViewModes } from './shared/hooks/TwitchExtContext.hook';
 
-const defaultState: AppState = { data: { category: 'default', entries: [] }, config: { dataUrl: '' } };
+const defaultState: AppState = { data: { category: 'default', entries: [] } };
 
-const lightMode = 'light-mode';
-const darkMode = 'dark-mode';
+type modes = keyof ColorModesContextType;
 
-type ViewModes = 'viewer' | 'dashboard' | 'config';
 
 function App() {
   const [data, setData] = useState<AppState>(defaultState);
   const [url, setUrl] = useState('/config/user-bits.json');
-  const [isLoading, setIsLoading] = useState(false);
- 
+  const [auth, config, theme, mode, isLoading] =  useTwitchPanelExtension();
+  
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      //setIsLoading(true);
       
-      await sleep(1000);
+      //await sleep(1000);
 
       const result = await Promise.resolve(
         require("./test/giftedSubs.test.json")
       );
 
       setData({ 
-        data: result, 
-        config: { dataUrl: '', 
-          titleText: "Hall of Fame"
-        } 
+        data: result
       });
-      setIsLoading(false);
+      //setIsLoading(false);
     };
  
     fetchData();
   }, [url]);
-
-  const [appTheme, setAppTheme] = useState<string>(darkMode);
-  const [appMode, setAppMode] = useState<ViewModes>('config');
 
   const renderLayout = (layoutMode: ViewModes) => {
     switch(layoutMode) {
@@ -52,41 +46,19 @@ function App() {
       case 'viewer': { return (<ViewerLayout {...data}/>) }
     }
   }
-  
 
-  /**
-   * Twitch Context Handlers
-   */
-  useEffect(() => {
-    registerContextHandlers({
-      theme:(newTheme)=>{
-        switch(newTheme){
-          case 'light':{
-            setAppTheme(lightMode);
-            break;
-          }
-          case 'dark':{
-            setAppTheme(darkMode);
-            break;
-          }        
-        }
-      },
-      mode:(newMode)=>setAppMode(newMode as ViewModes)
-    });    
-  }, []);
-    
   return (
-    <div className={`app-container ${appTheme}`}>
-      {
-        isLoading? 
-          <Loading/>:
-          renderLayout(appMode)
-      }
-    </div>
+    <ColorsContext.Provider value={modes[theme]}>
+      <div className={`app-container`}>
+        {
+          isLoading? 
+            <Loading/>:
+            renderLayout(mode)
+        }
+      </div>
+    </ColorsContext.Provider>
   );
 }
-
-
 
 
 function sleep(ms: number) {

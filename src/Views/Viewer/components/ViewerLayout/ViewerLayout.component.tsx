@@ -1,10 +1,11 @@
+import React, { useCallback, useContext, useState } from 'react';
 import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
 import { AppState } from '../../../../App.state';
-import { useCallback, useState } from 'react';
 import { ColoredScrollbars } from '../../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
+import { ColorsContext } from '../../../../Context/Colors.context';
 
 /**
  * @description The viewer layout component is responsible for orchestrating the
@@ -54,21 +55,28 @@ export function ViewerLayout(props: AppState) {
     const rhProps: RankingsHeaderProps = {
         isColumnHeadersTop: isColumnHeadersTop,
         category: props.data.category,
-        titleText: props.config.titleText,
-        titleUrl: props.config.titleUrl,
-        headerUrl: props.config.headerUrl,
+        titleText: 'Tears List',
+        //titleUrl: props.config.titleUrl,
+        //headerUrl: props.config.headerUrl,
         layoutWidth: layoutWidth,
         setTitleHeight: setTitleHeight
     }
     
 
+    const theme = useContext(ColorsContext);
+
     return (
-        <ColoredScrollbars style={{ height: 500 }}
+        <ColoredScrollbars 
+            style={{ height: 500, color: theme.text, background: theme.background }} 
+            thumbColor={theme.acccent} 
             onScroll={handleScrolling}>
-            <div className="layout" ref={layoutDiv} >
+
+            <div ref={layoutDiv} 
+                style={{  }}>
                 <RankingsHeader {...rhProps}/>
                 <RankingsTable model={props.data} />
             </div>
+
         </ColoredScrollbars>
     );
 }

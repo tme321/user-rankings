@@ -1,0 +1,1 @@
+export const modCheck = (role: string)=>role === 'broadcaster' || role === 'moderator';
