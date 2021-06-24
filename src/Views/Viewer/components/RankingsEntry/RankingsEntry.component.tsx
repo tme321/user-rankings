@@ -10,7 +10,7 @@ export function RankingsEntry(props: DataEntry & { style: CSSProperties }) {
     const theme = useContext(ColorsContext);
     return (
         <li className="entry" 
-            style={{ ...props.style, borderColor: theme.acccent }}>
+            style={{ ...props.style, borderColor: theme.accent }}>
             <span>{props.username}</span>
             <span>{props.value}</span>
         </li>)

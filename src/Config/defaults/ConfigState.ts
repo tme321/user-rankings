@@ -1,8 +1,10 @@
-import { ConfigState } from '../Config.state';
+import { ConfigModel } from "../model/Config.model";
+import { defaultColorModesConfig } from './ColorModesConfig';
 
-export const defaultConfigState: ConfigState = {
+export const defaultConfigState: ConfigModel = {
     dataUrl: '',
     selectedHeaderType: 'titleText',
-    titleText: 'Hall of Fame',
-    categoryText: 'Gifted Subs',
+    titleText: 'Default Title',
+    categoryText: 'Default Category',
+    themes: defaultColorModesConfig
 }

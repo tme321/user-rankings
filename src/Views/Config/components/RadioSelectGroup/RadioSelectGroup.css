@@ -1,0 +1,28 @@
+.radio-group-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.radio-buttons-container, .contents-container {
+    display :flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-between;
+    height: 70px;
+} 
+
+.radio-buttons-container {
+    align-items: flex-end;
+}
+
+.title-container {
+    margin: 0;
+    padding: 0;
+}
+
+.title-container span {
+    font-size: 0.75em;
+}
+

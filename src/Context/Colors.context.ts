@@ -1,7 +1,7 @@
 import React from 'react';
 import { defaultColorModesConfig } from '../Config/defaults/ColorModesConfig';
-import { colorConfigToContext } from './helpers';
-
+import { ColorModesModel } from '../Config/model/ColorModes.model';
+/*
 export type ColorsContextType = {
     background: string,
     acccent: string,
@@ -15,7 +15,8 @@ export type ColorModesContextType = {
     dark: ColorsContextType;
     light: ColorsContextType;
 }
+*/
 
-export const modes: ColorModesContextType = colorConfigToContext(defaultColorModesConfig);
+export const modes: ColorModesModel = defaultColorModesConfig;
 
 export const ColorsContext = React.createContext(modes.dark);

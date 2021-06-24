@@ -61,14 +61,13 @@ export function ViewerLayout(props: AppState) {
         layoutWidth: layoutWidth,
         setTitleHeight: setTitleHeight
     }
-    
 
     const theme = useContext(ColorsContext);
 
     return (
         <ColoredScrollbars 
             style={{ height: 500, color: theme.text, background: theme.background }} 
-            thumbColor={theme.acccent} 
+            thumbColor={theme.accent} 
             onScroll={handleScrolling}>
 
             <div ref={layoutDiv} 

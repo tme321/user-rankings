@@ -7,7 +7,7 @@ export type Themes = 'light' | 'dark';
 export function useTwitchContext():[Themes, ViewModes] {
 
     const [twitchTheme, setTwitchTheme] = useState<Themes>('dark');
-    const [extensionMode, setExtensionMode] = useState<ViewModes>('viewer');
+    const [extensionMode, setExtensionMode] = useState<ViewModes>('config');
 
     useEffect(()=>{
         registerTwitchExtContextHandlers({

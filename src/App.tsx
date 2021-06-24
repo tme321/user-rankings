@@ -6,13 +6,14 @@ import { Loading } from './Views/Loading/Loading.component';
 import { ViewerLayout } from './Views/Viewer/components/ViewerLayout/ViewerLayout.component';
 import { ConfigLayout } from './Views/Config/components/ConfigLayout/ConfigLayout.component';
 import { DashboardLayout } from './Views/Dashboard/components/DashboardLayout/DashboardLayout.component';
-import { ColorModesContextType, ColorsContext, modes } from './Context/Colors.context';
+import { ColorsContext, modes } from './Context/Colors.context';
 import { useTwitchPanelExtension } from './shared/hooks/TwitchPanelExtension.hook';
 import { ViewModes } from './shared/hooks/TwitchExtContext.hook';
+import { ConfigModel } from './Config/model/Config.model';
 
 const defaultState: AppState = { data: { category: 'default', entries: [] } };
 
-type modes = keyof ColorModesContextType;
+//type modes = 'light' | 'dark';
 
 
 function App() {
@@ -39,19 +40,27 @@ function App() {
     fetchData();
   }, [url]);
 
+  const handleSaveConfig = (config: ConfigModel) => {
+    console.log(config);
+  }
+
   const renderLayout = (layoutMode: ViewModes) => {
     switch(layoutMode) {
-      case 'config': { return (<ConfigLayout/>) }
+      case 'config': { return (
+        <ConfigLayout 
+          config={config as ConfigModel} 
+          handleSaveConfig={handleSaveConfig}/>) }
       case 'dashboard': { return (<DashboardLayout/>) }
       case 'viewer': { return (<ViewerLayout {...data}/>) }
     }
   }
+  console.log('modes: ',modes);
 
   return (
     <ColorsContext.Provider value={modes[theme]}>
       <div className={`app-container`}>
         {
-          isLoading? 
+          false? 
             <Loading/>:
             renderLayout(mode)
         }

@@ -2,24 +2,45 @@
 .config-layout {
     height: 100%;
     width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
 }
 
-.colors-container, .data-container {
+.fields-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100px;    
 }
 
-
-.data-widget {
+.data-container {
     display: flex;
-    flex-direction: row;
-    flex: auto;
+    flex-direction: row; 
+    width: 100%;   
 }
 
-.data-widget > * {
-    width: 50%;
-}
-
-.data-widget label {
+.data-labels {
     text-align: right;
 }
+
+.data-labels, .data-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 50px;
+    justify-content: space-evenly;
+}
+
+.data-title-container {
+    margin: 0;
+    padding: 0;
+}
+
+.data-title-container span {
+    font-size: 0.75em;
+}
+
+

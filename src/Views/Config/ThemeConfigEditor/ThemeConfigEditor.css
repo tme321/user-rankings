@@ -1,0 +1,24 @@
+.colors-container {
+    border: 1px solid;
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 300px;
+}
+
+h2.theme-title {
+    margin:0;
+    padding:0;
+    padding-bottom: 5px;
+}
+
+.theme-title span {
+    font-size: 0.75em;
+}
+
+.theme-editors {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
