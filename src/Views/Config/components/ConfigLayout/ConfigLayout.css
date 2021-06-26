@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    height: 100px;    
+    height: 130px;    
 }
 
 .data-container {
@@ -30,7 +30,7 @@
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 50px;
+    height: 80px;
     justify-content: space-evenly;
 }
 
@@ -43,4 +43,10 @@
     font-size: 0.75em;
 }
 
+.radio-group-input {
+    width: 100%;
+}
 
+form {
+    padding-bottom: 20px;
+}

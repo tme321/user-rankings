@@ -6,6 +6,5 @@ export type DataEntry = {
 type DataEntries = Array<DataEntry>;
 
 export interface DataState {
-    category: string,
     entries: DataEntries
 }

@@ -1,20 +1,14 @@
 import React from 'react';
 import './ThemeConfigEditor.css';
-import { ColorsModel } from '../../../Config/model/Colors.model';
-import { ColorPickerWidget } from '../components/ColorPickerWidget/ColorPickerWidget.component';
+import { ColorPickerWidget } from '../ColorPickerWidget/ColorPickerWidget.component';
+import { ThemeConfigEditorProps } from './ThemeConfigEditor.props';
 
-interface ThemeConfigEditorProps { 
-    title: string,
-    theme: ColorsModel, 
-    colorChangeHandlers: {
-        background: (color:string)=>void,
-        accent: (color:string)=>void,
-        text: (color:string)=>void,
-        altText: (color:string)=>void,
-    }
-}
 
-export function ThemeConfigEditor({title, theme, colorChangeHandlers }: ThemeConfigEditorProps) {
+export function ThemeConfigEditor({ 
+    title, 
+    theme, 
+    colorChangeHandlers }: ThemeConfigEditorProps) {
+        
     return (
         <div className="colors-container" 
             style={{ 

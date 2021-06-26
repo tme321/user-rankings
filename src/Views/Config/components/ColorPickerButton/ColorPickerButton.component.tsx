@@ -1,104 +1,65 @@
 import React, { useState } from 'react';
-import reactCSS from 'reactcss';
-import { SketchPicker, RGBColor, ColorResult } from 'react-color';
+import './ColorPickerButton.css';
+import { SketchPicker, ColorResult } from 'react-color';
 import { ColorPickerButtonProps } from './ColorPickerButton.props';
-
-interface ColorPickerButtonState {
-  displayColorPicker: boolean;
-}
-
-function convertStringToRGBColor(color:string): RGBColor {
-  const regexCSSrgba =  /rgba\((?<r>\d+),(?<g>\d+),(?<b>\d+),(?<a>\d+)\)/m;
-  const colorsMatch = regexCSSrgba.exec(color);
-  const rgbColor: RGBColor = { 
-    r: Number.parseInt(colorsMatch?.groups?.r || '') || 241, 
-    g: Number.parseInt(colorsMatch?.groups?.g || '') || 112, 
-    b: Number.parseInt(colorsMatch?.groups?.b || '') || 19, 
-    a: Number.parseInt(colorsMatch?.groups?.a || '') || 1
-  }
-  return rgbColor;
-}
-
-function convertRGBColorToString(color:RGBColor): string {
-  return `rgb(${color.r},${color.g},${color.b},${color.a})`;
-}
-
+import { convertStringToRGBColor, convertRGBColorToString } from './ColorPickerButton.helpers';
+import { ColorPickerButtonState } from './ColorPickerButton.state';
 
 export function ColorPickerButton(props: ColorPickerButtonProps) {
-  const [buttonState, setButtonState] = useState<ColorPickerButtonState>(()=>{
-    const color = convertStringToRGBColor(props.color)
-    return { displayColorPicker: false, color: color };
-  });
-
-  const handleClick = () => {
-    setButtonState({ 
-      ...buttonState, 
-      displayColorPicker: !buttonState.displayColorPicker  
-    });
-  };
-
-  const handleClose = () => {
-    setButtonState({
-      ...buttonState, 
-      displayColorPicker: false 
-    });
-  };
-
-  const handleChange = (color: ColorResult) => {
-    setButtonState({ 
-      ...buttonState, 
-      //color: color.rgb 
+    const [buttonState, setButtonState] = useState<ColorPickerButtonState>(()=>{
+        return { displayColorPicker: false,
+        color: convertStringToRGBColor(props.color) };
     });
 
-    if(props.handleChange) {
-      props.handleChange(convertRGBColorToString(color.rgb));
-    }
-  };
+    const handleClick = () => {
+        setButtonState({
+            ...buttonState, 
+            displayColorPicker: !buttonState.displayColorPicker  
+        });
+    };
 
-  const color = convertStringToRGBColor(props.color);
+    const handleClose = () => {
+        setButtonState({
+            ...buttonState,
+            displayColorPicker: false 
+        });
+    };
 
-  const styles = reactCSS({
-    'default': {
-      color: {
-        width: '36px',
-        height: '14px',
-        borderRadius: '2px',
-        background: props.color,
-      },
-      swatch: {
-        padding: '2px',
-        background: 'darkgray',
-        borderRadius: '1px',
-        marginTop: '4px',
-        //marginLeft: '20px',
-        boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-        display: 'inline-block',
-        cursor: 'pointer',
-      },
-      popover: {
-        position: 'absolute',
-        zIndex: '2',
-      },
-      cover: {
-        position: 'fixed',
-        top: '0px',
-        right: '0px',
-        bottom: '0px',
-        left: '0px',
-      },
-    },
-  });
+    const handleChange = (color: ColorResult) => {
+        setButtonState({ 
+            ...buttonState, 
+            color: color.rgb
+        });
 
-  return (
-    <div>
-      <div style={ styles.swatch } onClick={ handleClick }>
-        <div style={ styles.color } />
-      </div>
-        { buttonState.displayColorPicker ? 
-        <div style={ styles.popover as any }>
-          <div style={ styles.cover as any } onClick={ handleClose }/>
-          <SketchPicker color={ color } onChange={ handleChange } />
-        </div> : null }
-    </div>
-  );
+        if(props.handleChange) {
+            props.handleChange(convertRGBColorToString(color.rgb));
+        }
+    };
+
+    const selectedColorStyle = { 
+        backgroundColor: convertRGBColorToString(buttonState.color) 
+    };
+
+    return (
+        <div>
+            <div 
+                className="swatch-container" 
+                onClick={ handleClick }>
+                <div 
+                    className="color-container" 
+                    style={selectedColorStyle} />
+            </div>
+            { 
+                buttonState.displayColorPicker ? 
+                    <div className="popover-container" >
+                    <div className="cover-container" 
+                        onClick={ handleClose }/>
+                        <SketchPicker 
+                            color={ buttonState.color } 
+                            onChange={ handleChange } />
+                    </div> : 
+                    null 
+            }
+        </div>
+    );
 }

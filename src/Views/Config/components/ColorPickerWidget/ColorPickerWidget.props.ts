@@ -1,6 +1,4 @@
-import { RGBColor } from 'react-color';
-
-export interface ColorPickerWidgetProps { 
+export type ColorPickerWidgetProps = { 
     label: string;
     labelColor?: string;
     color: string;

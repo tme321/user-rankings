@@ -14,7 +14,6 @@ export class ColoredScrollbars extends
 
     constructor(props: ColoredScrollbarProps) {
         super(props);
-        console.log(props);
         this.state = { top: 0 };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.renderView = this.renderView.bind(this);

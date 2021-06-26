@@ -3,9 +3,10 @@ import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
-import { AppState } from '../../../../App.state';
 import { ColoredScrollbars } from '../../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
 import { ColorsContext } from '../../../../Context/Colors.context';
+import { ViewerLayoutProps } from './ViewerLayout.props';
+import { nullToString } from '../../../../shared/helpers/nullToString';
 
 /**
  * @description The viewer layout component is responsible for orchestrating the
@@ -13,13 +14,12 @@ import { ColorsContext } from '../../../../Context/Colors.context';
  * @param props The entire AppState is passed to the layout to divide
  * between the headers and the content body.
  */
-export function ViewerLayout(props: AppState) {
+export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
     /**
      * Track when the column headers should become sticky
      * to the top of the view or should attach themselves to
      * the bottom of the title box.
      */
-
     const [isColumnHeadersTop, setColumnHeadersTop] = useState(false);
     const [titleHeight, setTitleHeight] = useState(1000);
 
@@ -51,14 +51,15 @@ export function ViewerLayout(props: AppState) {
     /**
      * Make props for the header 
      */
-
     const rhProps: RankingsHeaderProps = {
         isColumnHeadersTop: isColumnHeadersTop,
-        category: props.data.category,
-        titleText: 'Tears List',
-        //titleUrl: props.config.titleUrl,
-        //headerUrl: props.config.headerUrl,
+        category: config.categoryText,
+        usersColumnText: config.usersColumnText,
+        titleText: nullToString(config.titleText),
+        titleUrl: nullToString(config.titleUrl),
+        headerUrl: nullToString(config.headerUrl),
         layoutWidth: layoutWidth,
+        selectedHeaderType: config.selectedHeaderType,        
         setTitleHeight: setTitleHeight
     }
 
@@ -73,7 +74,7 @@ export function ViewerLayout(props: AppState) {
             <div ref={layoutDiv} 
                 style={{  }}>
                 <RankingsHeader {...rhProps}/>
-                <RankingsTable model={props.data} />
+                <RankingsTable tableData={tableData} />
             </div>
 
         </ColoredScrollbars>

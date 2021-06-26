@@ -6,15 +6,16 @@ import { ColorsContext } from '../../../../Context/Colors.context';
 import { ConfigModel } from '../../../../Config/model/Config.model';
 import { isAConfig } from '../../../../Config/helpers/isAConfig';
 import { copyConfig } from '../../../../Config/helpers/copyConfig';
-import { ThemeConfigEditor } from '../../ThemeConfigEditor/ThemeConfigEditor.component';
+import { ThemeConfigEditor } from '../ThemeConfigEditor/ThemeConfigEditor.component';
 import { HeaderModel } from '../../../../Config/model/Header.model';
+import { ConfigLayoutProps } from './ConfigLayout.props';
+import { RadioGroupItem } from '../RadioSelectGroup/RadioSelectGroup.props';
 
-export function ConfigLayout({config, handleSaveConfig }: { config?: ConfigModel, handleSaveConfig: (config: ConfigModel)=>void }) {
+export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
 
     const theme = useContext(ColorsContext);
 
-    const [currentConfig, setConfig] = useState<ConfigModel>(()=>
-        copyConfig(isAConfig(config)?config:defaultConfigState));
+    const [currentConfig, setConfig] = useState<ConfigModel>(copyConfig(config));
 
     const handleTitleBehaviorSelection = (select: HeaderModel) => {
         setConfig((config)=>{
@@ -48,28 +49,6 @@ export function ConfigLayout({config, handleSaveConfig }: { config?: ConfigModel
         });
     };
 
-
-    const ColorsRadioGroupContent: { content: JSX.Element, label: string, selectionValue: HeaderModel }[] = [{
-        content: (<input defaultValue={currentConfig.titleText} onChange={handleTitleTextChange}/>),
-        label: "Title Text:",
-        selectionValue: 'titleText'
-    },
-    {
-        content: (<input defaultValue={currentConfig.titleUrl} onChange={handleTitleUrlChange}/>),
-        label: "Title Url:",
-        selectionValue: 'titleUrl'
-    },
-    {
-        content: (<input defaultValue={currentConfig.headerUrl} onChange={handleHeaderUrlChange}/>),
-        label: "Header Url:",
-        selectionValue: 'headerUrl'
-    }]; 
-
-    const handleSubmit = (event: FormEvent) => {
-        handleSaveConfig(currentConfig);
-        event.preventDefault();
-    }
-
     const handleDataUrlChange = (e: ChangeEvent<HTMLInputElement>)=>{
         setConfig((config)=>{
             const newConfig = copyConfig(config);
@@ -82,6 +61,14 @@ export function ConfigLayout({config, handleSaveConfig }: { config?: ConfigModel
         setConfig((config)=>{
             const newConfig = copyConfig(config);
             newConfig.categoryText = e.target.value;
+            return newConfig;
+        });
+    };
+
+    const handleUsersColumnTextChange = (e: ChangeEvent<HTMLInputElement>)=>{
+        setConfig((config)=>{
+            const newConfig = copyConfig(config);
+            newConfig.usersColumnText = e.target.value;
             return newConfig;
         });
     };
@@ -148,24 +135,54 @@ export function ConfigLayout({config, handleSaveConfig }: { config?: ConfigModel
             },
         }
     }
+    
+    const handleSubmit = (event: FormEvent) => {
+        handleSaveConfig(currentConfig);
+        event.preventDefault();
+    }
+
+    const ColorsRadioGroupContent: RadioGroupItem<HeaderModel>[] = [{
+        content: (<input
+                    className="radio-group-input" 
+                    defaultValue={currentConfig.titleText} 
+                    onChange={handleTitleTextChange}/>),
+        label: "Title Text:",
+        selectionValue: 'titleText'
+    },
+    {
+        content: (<input 
+                    className="radio-group-input" 
+                    defaultValue={currentConfig.titleUrl} 
+                    onChange={handleTitleUrlChange}/>),
+        label: "Title Url:",
+        selectionValue: 'titleUrl'
+    },
+    {
+        content: (<input 
+                    className="radio-group-input" 
+                    defaultValue={currentConfig.headerUrl} 
+                    onChange={handleHeaderUrlChange}/>),
+        label: "Header Url:",
+        selectionValue: 'headerUrl'
+    }]; 
 
     return (
         <div className="config-layout" 
             style={{ background: theme.background, color: theme.text }}>
-            <h1><span>Configuration</span></h1>
             <form onSubmit={handleSubmit}>
-
-                <div style={{ height: "30px"}}>
-                    <button style={{
-                        background: theme.accent, 
-                        color: theme.text,
-                        borderRadius: "5px",
-                    }}
-                    type="submit">
-                        Save Config
-                    </button>
-                </div>
-
+                <h1>
+                    <span>User Rankings Configuration</span>
+                    <div style={{ height: "30px"}}>
+                        <button style={{
+                            background: theme.accent, 
+                            color: theme.text,
+                            borderRadius: "5px",
+                        }}
+                        type="submit">
+                            Save Config
+                        </button>
+                    </div>
+                </h1>
                 <div className="theme-editors">
                     <ThemeConfigEditor 
                             title="Dark Mode Theme"
@@ -185,10 +202,19 @@ export function ConfigLayout({config, handleSaveConfig }: { config?: ConfigModel
                         <div className="data-labels">
                             <label>Data Url:</label>
                             <label>Ranking Category:</label>
+                            <label>Users Column Text:</label>
                         </div>
                         <div className="data-inputs">
-                            <input defaultValue={currentConfig.dataUrl} onChange={handleDataUrlChange}/>
-                            <input defaultValue={currentConfig.categoryText} onChange={handleCategoryChange}/>
+                            <input 
+                                defaultValue={currentConfig.dataUrl} 
+                                onChange={handleDataUrlChange}/>
+                            <input 
+                                defaultValue={currentConfig.categoryText} 
+                                onChange={handleCategoryChange}/>
+                            <input 
+                                defaultValue={currentConfig.usersColumnText} 
+                                onChange={handleUsersColumnTextChange}
+                                />
                         </div>
                     </div>
                 </div>

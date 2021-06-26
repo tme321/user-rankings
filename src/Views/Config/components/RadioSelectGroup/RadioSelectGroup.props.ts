@@ -1,7 +1,13 @@
-export interface RadioSelectGroupProps<SelectionType> {
+export type RadioSelectGroupProps<SelectionType> = {
     title: string;
     groupName: string;
-    items: { content: JSX.Element, label: string, selectionValue: SelectionType}[];
+    items: RadioGroupItem<SelectionType>[];
     currentSelection: SelectionType;
     handleSelection: (selectedValue: SelectionType)=>void;
 }
+
+export type RadioGroupItem<SelectionType> = { 
+    content: JSX.Element, 
+    label: string, 
+    selectionValue: SelectionType
+};

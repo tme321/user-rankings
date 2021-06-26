@@ -1,17 +1,9 @@
+import React from 'react';
 import './RankingsHeader.css';
 import { RankingsHeaderProps } from './RankingsHeader.props';
-import { TitleHeader } from '../TitleHeader/TitleHeader.component';
 import { TitleImg } from '../TitleImg/TitleImg.component';
 import { ColumnsHeader } from '../ColumnsHeader/ColumnsHeader.component';
-
-const FullHeader = (props: RankingsHeaderProps) => (
-    <>
-        <TitleHeader {...props}/>
-        <ColumnsHeader 
-            category={props.category} 
-            isColumnHeadersTop={props.isColumnHeadersTop}  
-            width={props.layoutWidth} />
-    </>);
+import { TitleText } from '../TitleText/TitleText.component';
 
 /**
  * @description If a headerUrl is passed render only it 
@@ -20,13 +12,41 @@ const FullHeader = (props: RankingsHeaderProps) => (
  * text.
  */
 export function RankingsHeader(props: RankingsHeaderProps) {
-    return (
-        <header className="header"> 
-            {
-                props.headerUrl ?
-                    <TitleImg titleUrl={props.headerUrl}/>: 
-                    <FullHeader {...props}/>
+
+    const headerLayout = ()=>{
+        switch(props.selectedHeaderType) {
+            case 'titleText': {
+                return(<>
+                    <TitleText text={props.titleText}/>
+                    <ColumnsHeader 
+                        category={props.category}
+                        usersColumnText={props.usersColumnText}  
+                        isColumnHeadersTop={props.isColumnHeadersTop}  
+                        width={props.layoutWidth} />
+                </>);
             }
+            case 'titleUrl': {
+                return(<>
+                    <TitleImg titleUrl={props.titleUrl}/>
+                    <ColumnsHeader 
+                        category={props.category}
+                        usersColumnText={props.usersColumnText} 
+                        isColumnHeadersTop={props.isColumnHeadersTop}  
+                        width={props.layoutWidth} />
+
+                </>);
+            } 
+            case 'headerUrl' : {
+                return(<TitleImg titleUrl={props.headerUrl}/>);
+            }
+        }
+    }
+
+    return (
+        <header className="header">
+            {
+                headerLayout()
+            } 
         </header>
     );
 }

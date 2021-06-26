@@ -1,0 +1,28 @@
+.swatch-container {
+    padding: 2px;
+    background-color: darkgray;
+    border-radius: 1px;
+    margin-top: 4px;
+    box-shadow: '0 0 0 1px rgba(0,0,0,.1)';
+    display: inline-block;
+    cursor: pointer;
+}
+
+.color-container {
+    width: 36px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.popover-container {
+    position: absolute;
+    z-index: 100;
+}
+
+.cover-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }

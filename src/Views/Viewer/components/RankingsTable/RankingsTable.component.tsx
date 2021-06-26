@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import './RankingsTable.css';
-import { DataState } from "../../../../shared/data/data.state";
 import { RankingsEntry } from "../RankingsEntry/RankingsEntry.component";
 import { ColorsContext } from '../../../../Context/Colors.context';
+import { RankingsTableProps } from './RankingsTable.props';
 
 /** 
  * @description A table of rankings entries.
  */
-export function RankingsTable(props: { model: DataState }) {    
+export function RankingsTable({ tableData }: RankingsTableProps) {    
 
     const theme = useContext(ColorsContext);
 
-    const entries = props.model.entries?.map((entry,index)=>
+    const entries = tableData.entries?.map((entry,index)=>
         <RankingsEntry {...entry} 
             key={entry.username} 
             style={{ color:`${index%2?theme.altText:theme.text}` }}/>);

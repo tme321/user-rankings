@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import './ColumnsHeader.css';
 import { ColorsContext } from '../../../../Context/Colors.context';
+import { ColumnHeaderProps } from './ColumnsHeader.props';
 
 /**
  * @description The table entry column headers renderer. 
  */
-export function ColumnsHeader ({ category , isColumnHeadersTop, width }: { 
-    category: string, 
-    isColumnHeadersTop: boolean, 
-    width: number
-}) {
+export function ColumnsHeader ({ 
+    category,
+    usersColumnText, 
+    isColumnHeadersTop, 
+    width }: ColumnHeaderProps) {
+
     const theme = useContext(ColorsContext);
     
     return (
@@ -20,7 +22,7 @@ export function ColumnsHeader ({ category , isColumnHeadersTop, width }: {
                 }
             style={{ width: width, backgroundColor: theme.background }}>
             <div>
-                <span>User Name</span>
+                <span>{usersColumnText}</span>
                 <span>{category}</span>
             </div>
         </h2>);

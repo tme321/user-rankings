@@ -30,42 +30,15 @@ export const handleTwitchExtContextChanges =
         }
 
 export function registerTwitchExtContextHandlers
-    <C extends Partial<Twitch.ext.Context>,
-     K extends keyof C>
+    <C extends Partial<Twitch.ext.Context>>
         (handlers: TwitchContextHandlerMap<C>) {
             const contextCallback = handleTwitchExtContextChanges(handlers);
             // small hack because the typings suck
             window.Twitch.ext.onContext(contextCallback as any);
-
-    /* testing code */
-    /*
-    setTimeout(() => {
-        contextCallback({ theme: "light"} as any,['theme'] as any);
-    }, 5000);
-
-    setTimeout(() => {
-        contextCallback({ theme: "dark"} as any,['theme'] as any);
-    }, 10000);
-
-    setTimeout(() => {
-        contextCallback({ mode: "config"} as any,['mode'] as any);
-    }, 15000);
-
-    setTimeout(() => {
-        contextCallback({ mode: "dashboard"} as any,['mode'] as any);
-    }, 20000);
-
-    setTimeout(() => {
-        contextCallback({ mode: "viewer"} as any,['mode'] as any);
-    }, 25000);
-    */
-
 }
 
 export function registerTwitchExtConfigHandler(callback:()=>void) {
     window.Twitch.ext.configuration.onChanged(callback);
-    
-    
 }
 
 export function registerTwitchExtErrorHandler(errorCallback:(error: any)=>void) {

@@ -2,9 +2,11 @@ import React from 'react';
 import './RadioSelectGroup.css';
 import { RadioSelectGroupProps } from "./RadioSelectGroup.props";
 
-export function RadioSelectGroup<SelectionType>(
-    { title, groupName, items, currentSelection, handleSelection }: 
-    RadioSelectGroupProps<SelectionType>) {
+export function RadioSelectGroup<SelectionType>({ 
+    title, 
+    groupName, 
+    items, 
+    currentSelection, handleSelection }: RadioSelectGroupProps<SelectionType>) {
 
     const handleSelect = (selectedValue: SelectionType)=> ()=> {
         handleSelection(selectedValue);
@@ -22,7 +24,7 @@ export function RadioSelectGroup<SelectionType>(
         </div>
     ));
 
-    const contents = items.map((item,)=>(<>{item.content}</>));
+    const contents = items.map((item,)=>(<div>{item.content}</div>));
 
     return (
         <div>

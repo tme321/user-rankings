@@ -6,7 +6,6 @@ import { modCheck } from "../helpers/modCheck";
 import { defaultAuthToken } from "../defaults/authToken";
 
 export function useTwitchExtAuth(): AuthState {
-    const twitchExt = window.Twitch.ext;
     const [authState,setAuthState] = useState<AuthState>({
         token: defaultAuthToken,
         isMod: false,
@@ -14,6 +13,7 @@ export function useTwitchExtAuth(): AuthState {
     });
     
     useEffect(()=>{
+        const twitchExt = window.Twitch.ext;
         twitchExt.onAuthorized((auth)=>{
             try {
                 const decodedToken: DecodedTwitchToken = 

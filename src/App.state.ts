@@ -1,5 +1,5 @@
 import { DataState } from "./shared/data/data.state";
 
-export interface AppState { 
-    data: DataState, 
-};
+export type TableData = {
+    tableData: DataState;
+}
