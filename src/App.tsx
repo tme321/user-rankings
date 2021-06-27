@@ -52,12 +52,18 @@ function App() {
             case 'config': { return (
                 <ConfigLayout 
                     config={renderConfig} 
-                    handleSaveConfig={handleSaveConfig}/>) }
-            case 'dashboard': { return (<DashboardLayout/>) }
+                    handleSaveConfig={handleSaveConfig}/>
+            )}
+            case 'dashboard': { return (
+                <DashboardLayout 
+                    config={renderConfig}
+                    tableData={data.tableData}/>
+            )}
             case 'viewer': { return (
                 <ViewerLayout 
                     config={renderConfig} 
-                    tableData={data.tableData}/>) }
+                    tableData={data.tableData}/>
+            )}
         }
     }
 
@@ -65,7 +71,7 @@ function App() {
         <ColorsContext.Provider value={modes[theme]}>
             <div className={`app-container`}>
             {
-                isLoading? 
+                false? 
                     <Loading/>:
                     renderLayout(mode, config)
             }

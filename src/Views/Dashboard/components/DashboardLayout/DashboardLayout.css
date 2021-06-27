@@ -1,0 +1,14 @@
+.dashboard-layout {
+    height: 100%;
+    width: 100%;
+}
+
+.dashboard-header {
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-header .container {
+    display: flex;
+    flex-direction: column;
+}

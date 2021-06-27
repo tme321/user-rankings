@@ -1,0 +1,9 @@
+ .tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    /*border-radius: 3px;*/
+}
+
