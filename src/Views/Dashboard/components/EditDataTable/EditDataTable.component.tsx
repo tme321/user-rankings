@@ -3,14 +3,17 @@ import './EditDataTable.css';
 import { EditDataTableProps } from './EditDataTable.props';
 import { ColorsContext } from '../../../../Context/Colors.context';
 import { ColoredScrollbars } from '../../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
+import { EditTableEntry } from '../EditTableEntry/EditTableEntry.component';
 
-export function EditDataTable({tableData, config}: EditDataTableProps) {
+export function EditDataTable({tableData, config, gotoUserEntry}: EditDataTableProps) {
     const theme = useContext(ColorsContext);
-    const entries = tableData.entries?.map((entry,index)=>(
-        <div style={{ display: "flex", justifyContent: "space-evenly" }} key={entry.username}>
-            <input defaultValue={entry.username}/>
-            <input defaultValue={entry.value}/>
-        </div>));
+    
+    const entries = tableData.entries?.map((entry)=>(
+        <EditTableEntry
+            key={entry.username}
+            {...entry}
+            gotoUserEntry={gotoUserEntry} 
+        />));
 
     return (
         <ColoredScrollbars 
@@ -21,10 +24,22 @@ export function EditDataTable({tableData, config}: EditDataTableProps) {
                 <div className="entries">
                     <span style={{ 
                         display: "flex", 
-                        justifyContent: "space-evenly",
-                        fontSize: "0.5em" }}>
-                        <label>{config.usersColumnText}</label>
-                        <label>{config.categoryText}</label>
+                        justifyContent: "center",
+                        fontSize: "1em" }}>
+                        <div style={{ 
+                            width: "165px",
+                            textAlign: "center",
+                            display: "inline-block", 
+                            paddingRight: "2px"  }}>
+                            <label style={{ }}>{config.usersColumnText}</label>
+                        </div>
+                        <div style={{ 
+                            width: "165px",
+                            textAlign: "center",
+                            display: "inline-block", 
+                            paddingLeft: "2px"  }}>
+                            <label style={{  }}>{config.categoryText}</label>
+                        </div>
                     </span>
                     {entries}
                 </div>

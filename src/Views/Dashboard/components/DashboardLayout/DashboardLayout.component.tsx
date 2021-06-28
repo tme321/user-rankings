@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import './DashboardLayout.css';
 import { DashboardLayoutProps } from './DashboardLayout.props';
 import { ColorsContext } from '../../../../Context/Colors.context';
@@ -8,11 +8,42 @@ import { EditDataTable } from '../EditDataTable/EditDataTable.component';
 export function DashboardLayout({config, tableData}: DashboardLayoutProps) {
     const theme = useContext(ColorsContext);
 
+    const [gotoState, setGotoState] = useState<string>('');
+
+    const [tempState, setTempState] = useState<string>('');
+        
+    const handleGoTo = () => {
+        setGotoState(tempState);
+    };
+
+    const handleGoToChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTempState(e.target.value);
+    };
+
+    const handleFindUser = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter') {
+            setGotoState((e.target as HTMLInputElement).value);
+        }
+    }
+    const handleFindUserFocus = ()=>{ setGotoState('') };
+
     const tabs={
             "Data":(
-                <EditDataTable 
-                    tableData={tableData}
-                    config={config}/>),
+                <>
+                    <div>
+                        <input type="text"
+                            onFocus={handleFindUserFocus}
+                            onKeyPress={handleFindUser} 
+                            placeholder="Username"
+                            onChange={handleGoToChange} 
+                            defaultValue={gotoState}/>
+                        <button onClick={handleGoTo}>Go To</button>
+                    </div>
+                    <EditDataTable
+                        gotoUserEntry={gotoState} 
+                        tableData={tableData}
+                        config={config}/>
+                </>),
             "Events":(<>Events</>)};
 
     return (
@@ -22,12 +53,13 @@ export function DashboardLayout({config, tableData}: DashboardLayoutProps) {
                 color: theme.text
             }}>
             <h1 className="dashboard-header">
-                <div className="container">
-                    <span>User Rankings</span>
-                        <TabSelectors tabs={tabs}/>                
-                </div>
+                <span>User Rankings</span>
             </h1>
-                
+            
+
+            <div className="container">
+                <TabSelectors tabs={tabs}/>                
+            </div>
         </div>
     );
 }

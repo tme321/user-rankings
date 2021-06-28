@@ -3,5 +3,6 @@ import { DataState } from "../../../../shared/data/data.state";
 
 export type EditDataTableProps = { 
     tableData: DataState, 
-    config: ConfigModel; 
+    config: ConfigModel;
+    gotoUserEntry: string; 
 };
