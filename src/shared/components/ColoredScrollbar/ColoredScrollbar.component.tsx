@@ -28,7 +28,7 @@ export class ColoredScrollbars extends
     renderView({ style, ...props }: ColoredScrollbarProps) {
         return (
             <div
-                style={{ ...style }}
+                style={{ ...style, overflowX:"hidden" }}
                 {...props}/>
         );
     }

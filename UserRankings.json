@@ -1,0 +1,105 @@
+{
+  "allowHttpBackend": false,
+  "backendCommand": "",
+  "backendFolderName": "",
+  "certificateExceptions": [],
+  "extensionViews": [
+    {
+      "channelId": "60540113",
+      "configurationAnchor": "panel",
+      "displayChannelName": "tme321",
+      "features": {
+        "isBitsEnabled": true,
+        "isChatEnabled": true,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "1",
+      "isPopout": false,
+      "label": "",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "panel",
+      "viewerType": "Broadcaster"
+    },
+    {
+      "channelId": "60540113",
+      "configurationAnchor": "panel",
+      "displayChannelName": "tme321",
+      "features": {
+        "isBitsEnabled": true,
+        "isChatEnabled": true,
+        "isSubscriptionStatusAvailable": true
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "2",
+      "isPopout": false,
+      "label": "",
+      "linked": true,
+      "linkedUserId": "265737932",
+      "orientation": "Portrait",
+      "type": "config",
+      "viewerType": "Broadcaster"
+    }
+  ],
+  "manifest": {
+    "anchor": "panel",
+    "assetUrls": [],
+    "authorName": "tme321",
+    "bitsEnabled": false,
+    "canInstall": true,
+    "configUrl": "https://localhost:8080/config.html",
+    "configurationLocation": "hosted",
+    "description": "Rank users according to a criteria such as bits or gifted subs.",
+    "eulaTosUrl": "",
+    "hasChatSupport": false,
+    "iconUrl": "",
+    "iconUrls": {},
+    "id": "90e6v1fjljr440y3xt074zlfk3kpl2",
+    "installationCount": -42,
+    "liveConfigUrl": "",
+    "name": "UserRankings",
+    "panelHeight": 500,
+    "privacyPolicyUrl": "",
+    "requestIdentityLink": false,
+    "requiredBroadcasterAbilities": [],
+    "screenshotUrls": [],
+    "sku": "",
+    "state": "Testing",
+    "subscriptionsSupportLevel": "none",
+    "summary": "Rank users according to a criteria",
+    "supportEmail": "tme321+te_support@gmail.com",
+    "vendorCode": "",
+    "version": "0.0.1",
+    "viewerSummary": "",
+    "viewerUrl": "https://localhost:8080/index.html",
+    "viewerUrls": {
+      "panel": "https://localhost:8080/index.html"
+    },
+    "views": {
+      "panel": {
+        "viewerUrl": "https://localhost:8080/index.html",
+        "height": 500,
+        "canLinkExternalContent": false
+      },
+      "config": {
+        "viewerUrl": "https://localhost:8080/config.html",
+        "canLinkExternalContent": false
+      }
+    },
+    "whitelistedConfigUrls": [],
+    "whitelistedPanelUrls": []
+  },
+  "frontendCommand": "",
+  "frontendFolderName": "",
+  "name": "UserRankings",
+  "usingRandomFrontendHostingPort": false,
+  "version": 3
+}

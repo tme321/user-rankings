@@ -21,7 +21,7 @@ export function useTwitchExtConfig<Config>({
                 twitchExt.configuration.broadcaster.content) {
                     const maybeConfig = JSON.parse(twitchExt.configuration.broadcaster.content);
                     if(isConfig(maybeConfig)) {
-                        setTwitchConfig(maybeConfig)        
+                        setTwitchConfig(maybeConfig);        
                     }
             }
         });

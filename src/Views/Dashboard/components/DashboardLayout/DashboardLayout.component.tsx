@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
+import React, { KeyboardEvent, useContext, useRef, useState } from 'react';
 import './DashboardLayout.css';
 import { DashboardLayoutProps } from './DashboardLayout.props';
 import { ColorsContext } from '../../../../Context/Colors.context';
@@ -9,22 +9,18 @@ export function DashboardLayout({config, tableData}: DashboardLayoutProps) {
     const theme = useContext(ColorsContext);
 
     const [gotoState, setGotoState] = useState<string>('');
-
-    const [tempState, setTempState] = useState<string>('');
+    const gotoInput = useRef(null);
         
     const handleGoTo = () => {
-        setGotoState(tempState);
-    };
-
-    const handleGoToChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTempState(e.target.value);
+        setGotoState((gotoInput?.current as any).value);
     };
 
     const handleFindUser = (e: KeyboardEvent<HTMLInputElement>) => {
         if(e.key === 'Enter') {
             setGotoState((e.target as HTMLInputElement).value);
         }
-    }
+    };
+
     const handleFindUserFocus = ()=>{ setGotoState('') };
 
     const tabs={
@@ -33,9 +29,9 @@ export function DashboardLayout({config, tableData}: DashboardLayoutProps) {
                     <div>
                         <input type="text"
                             onFocus={handleFindUserFocus}
-                            onKeyPress={handleFindUser} 
+                            onKeyPress={handleFindUser}
+                            ref={gotoInput} 
                             placeholder="Username"
-                            onChange={handleGoToChange} 
                             defaultValue={gotoState}/>
                         <button onClick={handleGoTo}>Go To</button>
                     </div>

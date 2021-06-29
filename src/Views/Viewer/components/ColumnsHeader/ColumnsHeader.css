@@ -4,6 +4,7 @@ h2.categories-header {
 
 .categories-header div {
     display: flex;
+    width: 310px;
 }
 
 .fixed {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import axios from 'axios';
 import './App.css';
 import { TableData } from './App.state';
@@ -17,10 +17,22 @@ import { isAConfig } from './Config/helpers/isAConfig';
 const defaultTableData: TableData = { tableData: { entries: [] } };
 
 function App() {
+
+    let initialMode: ViewModes = "viewer";
+    switch(window.location.pathname){
+        case "": { initialMode = "viewer"; break; }
+        case "/index.html": { initialMode = "viewer"; break; }
+        case "/config": { initialMode = "config"; break; }
+        case "/config.html": { initialMode = "config"; break; }
+        case "/dashboard": { initialMode = "dashboard"; break; }
+        case "/dashboard.html": { initialMode = "dashboard"; break; }
+    }
+
     const [data, setData] = useState<TableData>(defaultTableData);
     const [url, setUrl] = useState('/config/user-bits.json');
     const [auth, config, saveConfig, theme, mode, isLoading] =  
-        useTwitchPanelExtension({ 
+        useTwitchPanelExtension({
+            mode: initialMode, 
             defaultConfig: defaultConfigState, 
             isConfig: isAConfig });
 

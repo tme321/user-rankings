@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState, UIEvent } from 'react';
 import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
-import { ColoredScrollbars } from '../../../../shared/components/ColoredScrollbar/ColoredScrollbar.component';
 import { ColorsContext } from '../../../../Context/Colors.context';
 import { ViewerLayoutProps } from './ViewerLayout.props';
 import { nullToString } from '../../../../shared/helpers/nullToString';
@@ -21,16 +20,18 @@ export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
      * the bottom of the title box.
      */
     const [isColumnHeadersTop, setColumnHeadersTop] = useState(false);
-    const [titleHeight, setTitleHeight] = useState(1000);
+    const [titleHeight, setTitleHeight] = useState(50);
 
     /**
      * Hit testing for the column headers.
      */
-    const handleScrolling = (event: any) => { 
-        if(!isColumnHeadersTop && event.target.scrollTop >= titleHeight) {
+    const handleScrolling = (event: UIEvent<HTMLDivElement>) => { 
+        if(!isColumnHeadersTop && 
+            (event.target as HTMLDivElement).scrollTop >= titleHeight) {
             setColumnHeadersTop(true);
         }
-        else if(isColumnHeadersTop && event.target.scrollTop < titleHeight) {
+        else if(isColumnHeadersTop && 
+            (event.target as HTMLDivElement).scrollTop < titleHeight) {
             setColumnHeadersTop(false);
         } 
     };
@@ -40,14 +41,8 @@ export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
      * they transition to fixed position. 
      */
 
-    const [layoutWidth, setLayoutWidth] = useState(1100);
-    const layoutDiv = useCallback(node => {
-        if (node !== null) {
-            console.log("width: ", node.clientWidth);
-            setLayoutWidth(node.clientWidth);
-        }
-    }, []);
-
+    //const [layoutWidth, setLayoutWidth] = useState(300);
+   
     /**
      * Make props for the header 
      */
@@ -58,25 +53,56 @@ export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
         titleText: nullToString(config.titleText),
         titleUrl: nullToString(config.titleUrl),
         headerUrl: nullToString(config.headerUrl),
-        layoutWidth: layoutWidth,
+        layoutWidth: 300, //layoutWidth,
         selectedHeaderType: config.selectedHeaderType,        
         setTitleHeight: setTitleHeight
     }
 
     const theme = useContext(ColorsContext);
 
-    return (
-        <ColoredScrollbars 
-            style={{ height: 500, color: theme.text, background: theme.background }} 
-            thumbColor={theme.accent} 
-            onScroll={handleScrolling}>
+    const viewContainer = useRef<HTMLDivElement>(null);
 
-            <div ref={layoutDiv} 
-                style={{  }}>
+    useEffect(()=>{
+        if(viewContainer) {
+            viewContainer.current?.style.setProperty(
+                "--scrollbarBG", theme.background)
+            viewContainer.current?.style.setProperty(
+                "--thumbBG", theme.accent)
+        }
+    },[viewContainer, theme]);
+
+    return (
+        <div className="view-container"
+            ref={viewContainer}
+            onScroll={handleScrolling}
+            style={{ 
+                color: theme.text, 
+                background: theme.background,
+            }}>
+            <div  
+                style={{
+                    overflow: "hidden" 
+                }}>
                 <RankingsHeader {...rhProps}/>
                 <RankingsTable tableData={tableData} />
             </div>
-
-        </ColoredScrollbars>
+        </div>
+        /*</div>*/
     );
 }
+
+/*
+        <ColoredScrollbars 
+            style={{ 
+                height: "500px",
+                width: "320px", 
+                overflowX: "hidden",
+                display: "block"
+            }} 
+            thumbColor={theme.accent} 
+            onScroll={handleScrolling}>
+
+        </ColoredScrollbars>
+
+
+*/

@@ -17,10 +17,13 @@ export function ColumnsHeader ({
     return (
         <h2 className={
                 isColumnHeadersTop?
-                    "categories-header fixed" : 
+                    "categories-header fixed" :
                     "categories-header"
                 }
-            style={{ width: width, backgroundColor: theme.background }}>
+            style={{ 
+                /*width: width,*/ 
+                backgroundColor: theme.background 
+            }}>
             <div>
                 <span>{usersColumnText}</span>
                 <span>{category}</span>

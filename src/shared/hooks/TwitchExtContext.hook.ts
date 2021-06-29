@@ -4,10 +4,10 @@ import { registerTwitchExtContextHandlers } from "../services/TwitchContext/Twit
 export type ViewModes = 'viewer' | 'dashboard' | 'config';
 export type Themes = 'light' | 'dark';
 
-export function useTwitchContext():[Themes, ViewModes] {
+export function useTwitchContext({mode, theme}: {mode: ViewModes, theme: Themes}):[Themes, ViewModes] {
 
-    const [twitchTheme, setTwitchTheme] = useState<Themes>('dark');
-    const [extensionMode, setExtensionMode] = useState<ViewModes>('dashboard');
+    const [twitchTheme, setTwitchTheme] = useState<Themes>(theme);
+    const [extensionMode, setExtensionMode] = useState<ViewModes>(mode);
 
     useEffect(()=>{
         registerTwitchExtContextHandlers({

@@ -1,0 +1,24 @@
+.view-container {
+    height: 500px;
+    width: 320px; 
+    overflow-y: scroll; 
+    overflow-x: hidden;    
+    --scrollbarBG: #CFD8DC;
+    --thumbBG: #90A4AE;
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+.view-container::-webkit-scrollbar {
+    width: 11px;
+}
+
+.view-container::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+.view-container::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}

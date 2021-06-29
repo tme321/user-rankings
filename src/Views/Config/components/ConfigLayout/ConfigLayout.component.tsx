@@ -1,10 +1,8 @@
-import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import './ConfigLayout.css'
 import { RadioSelectGroup } from '../RadioSelectGroup/RadioSelectGroup.component';
-import { defaultConfigState } from '../../../../Config/defaults/ConfigState';
 import { ColorsContext } from '../../../../Context/Colors.context';
 import { ConfigModel } from '../../../../Config/model/Config.model';
-import { isAConfig } from '../../../../Config/helpers/isAConfig';
 import { copyConfig } from '../../../../Config/helpers/copyConfig';
 import { ThemeConfigEditor } from '../ThemeConfigEditor/ThemeConfigEditor.component';
 import { HeaderModel } from '../../../../Config/model/Header.model';
@@ -16,135 +14,156 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
     const theme = useContext(ColorsContext);
 
     const [currentConfig, setConfig] = useState<ConfigModel>(copyConfig(config));
+    const [isFormPristine, setFormPristine] = useState(true);
+
+    useEffect(()=>{
+        setConfig(copyConfig(config));
+    },[config]);
 
     const handleTitleBehaviorSelection = (select: HeaderModel) => {
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = {...prevConfig};
             newConfig.selectedHeaderType = select;
             return newConfig;
         });
+        setFormPristine(false);
     }        
 
     const handleTitleTextChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.titleText = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const handleTitleUrlChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.titleUrl = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const handleHeaderUrlChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.headerUrl = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const handleDataUrlChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.dataUrl = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.categoryText = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const handleUsersColumnTextChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setConfig((config)=>{
-            const newConfig = copyConfig(config);
+        setConfig((prevConfig)=>{
+            const newConfig = copyConfig(prevConfig);
             newConfig.usersColumnText = e.target.value;
             return newConfig;
         });
+        setFormPristine(false);
     };
 
     const colorChangeHandlers = {
         dark: {
             background: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.dark.background = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
             accent: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.dark.accent = color;
                     return newConfig
                 });
+                setFormPristine(false);
             },
             text: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.dark.text = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
             altText: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.dark.altText = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
         },
         light: {
             background: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.light.background = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
             accent: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.light.accent = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
             text: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.light.text = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
             altText: (color: string)=>{ 
-                setConfig((config)=>{
-                    const newConfig = copyConfig(config);
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
                     newConfig.themes.light.altText = color;
                     return newConfig;
                 });
+                setFormPristine(false);
             },
         }
     }
     
     const handleSubmit = (event: FormEvent) => {
         handleSaveConfig(currentConfig);
+        setFormPristine(true);
         event.preventDefault();
     }
 
     const ColorsRadioGroupContent: RadioGroupItem<HeaderModel>[] = [{
         content: (<input
                     className="radio-group-input" 
-                    defaultValue={currentConfig.titleText} 
+                    value={currentConfig.titleText} 
                     onChange={handleTitleTextChange}/>),
         label: "Title Text:",
         selectionValue: 'titleText'
@@ -152,7 +171,7 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
     {
         content: (<input 
                     className="radio-group-input" 
-                    defaultValue={currentConfig.titleUrl} 
+                    value={currentConfig.titleUrl} 
                     onChange={handleTitleUrlChange}/>),
         label: "Title Url:",
         selectionValue: 'titleUrl'
@@ -160,7 +179,7 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
     {
         content: (<input 
                     className="radio-group-input" 
-                    defaultValue={currentConfig.headerUrl} 
+                    value={currentConfig.headerUrl} 
                     onChange={handleHeaderUrlChange}/>),
         label: "Header Url:",
         selectionValue: 'headerUrl'
@@ -173,11 +192,12 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
                 <h1>
                     <span>User Rankings Configuration</span>
                     <div style={{ height: "30px"}}>
-                        <button style={{
-                            background: theme.accent, 
-                            color: theme.text,
-                            borderRadius: "5px",
+                        <button className="submit" 
+                            style={{
+                            background: isFormPristine?"#cccccc":theme.accent, 
+                            color: isFormPristine?"#666666":theme.text,
                         }}
+                        disabled={isFormPristine}
                         type="submit">
                             Save Config
                         </button>
@@ -206,13 +226,13 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
                         </div>
                         <div className="data-inputs">
                             <input 
-                                defaultValue={currentConfig.dataUrl} 
+                                value={currentConfig.dataUrl} 
                                 onChange={handleDataUrlChange}/>
                             <input 
-                                defaultValue={currentConfig.categoryText} 
+                                value={currentConfig.categoryText} 
                                 onChange={handleCategoryChange}/>
                             <input 
-                                defaultValue={currentConfig.usersColumnText} 
+                                value={currentConfig.usersColumnText} 
                                 onChange={handleUsersColumnTextChange}
                                 />
                         </div>
