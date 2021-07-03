@@ -7,3 +7,11 @@ ul.entries  {
     overflow: hidden;
 
 }
+
+.entries li {
+    color: var(--textColor);
+}
+
+.entries li:nth-child(even) {
+    color: var(--altTextColor);
+}

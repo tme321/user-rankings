@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useEffect, useRef, useState, UIEvent } from 'react';
+import React, { useState, UIEvent } from 'react';
 import './ViewerLayout.css';
 import { RankingsTable } from "../RankingsTable/RankingsTable.component";
 import { RankingsHeader } from "../RankingsHeader/RankingsHeader.component";
 import { RankingsHeaderProps } from "../RankingsHeader/RankingsHeader.props";
-import { ColorsContext } from '../../../../Context/Colors.context';
 import { ViewerLayoutProps } from './ViewerLayout.props';
 import { nullToString } from '../../../../shared/helpers/nullToString';
 
@@ -58,27 +57,9 @@ export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
         setTitleHeight: setTitleHeight
     }
 
-    const theme = useContext(ColorsContext);
-
-    const viewContainer = useRef<HTMLDivElement>(null);
-
-    useEffect(()=>{
-        if(viewContainer) {
-            viewContainer.current?.style.setProperty(
-                "--scrollbarBG", theme.background)
-            viewContainer.current?.style.setProperty(
-                "--thumbBG", theme.accent)
-        }
-    },[viewContainer, theme]);
-
     return (
-        <div className="view-container"
-            ref={viewContainer}
-            onScroll={handleScrolling}
-            style={{ 
-                color: theme.text, 
-                background: theme.background,
-            }}>
+        <div className="viewer-layout scroll-bar"
+            onScroll={handleScrolling}>
             <div  
                 style={{
                     overflow: "hidden" 
@@ -87,22 +68,5 @@ export function ViewerLayout({config, tableData}: ViewerLayoutProps) {
                 <RankingsTable tableData={tableData} />
             </div>
         </div>
-        /*</div>*/
     );
 }
-
-/*
-        <ColoredScrollbars 
-            style={{ 
-                height: "500px",
-                width: "320px", 
-                overflowX: "hidden",
-                display: "block"
-            }} 
-            thumbColor={theme.accent} 
-            onScroll={handleScrolling}>
-
-        </ColoredScrollbars>
-
-
-*/

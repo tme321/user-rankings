@@ -8,5 +8,6 @@ export type ThemeConfigEditorProps = {
         accent: (color:string)=>void,
         text: (color:string)=>void,
         altText: (color:string)=>void,
+        reset: ()=>void,
     };
 }

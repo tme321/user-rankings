@@ -16,11 +16,11 @@ export function EditTableEntry({username, value, gotoUserEntry}: EditTableEntryP
     focusValue();
  
     return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ display: "inline-block", paddingRight: "2px"  }}>
+        <div className="entry-container">
+            <div className="username">
                 <input defaultValue={username}/>
             </div>
-            <div style={{ display: "inline-block", paddingLeft: "2px" }}>
+            <div className="value">
                 <input ref={valueInputRef} defaultValue={value}/>
             </div>
         </div>

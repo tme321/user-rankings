@@ -8,6 +8,8 @@
     overflow: scroll;
     position: absolute;
     overflow-x: hidden;
+    background: var(--backgroundColor);
+    color: var(--textColor);
 }
 
 .fields-container {
@@ -55,11 +57,20 @@ form {
 
 .submit {
     font-size: 0.5em;
-    border-radius: 5px;    
+    border-radius: 4px;    
+    border: 1px solid var(--accentColor);
+    background-color: var(--accentColor);
+    color: var(--textColor);
+}
+
+.submit:hover:enabled {
+    border-color: var(--accentColor);
+    background-color: var(--accentColor);
+    color: var(--textColor);
 }
 
 .submit:disabled {
-    border: 1px solid #999999;
+    border-color: #999999;
     background-color: #cccccc;
     color: #666666;
 }

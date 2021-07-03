@@ -17,6 +17,6 @@ export type ColorModesContextType = {
 }
 */
 
-export const modes: ColorModesModel = defaultColorModesConfig;
+export const defaultModes: ColorModesModel = defaultColorModesConfig;
 
-export const ColorsContext = React.createContext(modes.dark);
+export const ColorsContext = React.createContext(defaultModes.dark);

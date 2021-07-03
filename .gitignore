@@ -16,6 +16,9 @@
 # production
 /build
 
+# dev platform specific
+/ssl
+
 # misc
 .DS_Store
 .env.local

@@ -25,7 +25,7 @@ export function useTwitchExtConfig<Config>({
                     }
             }
         });
-    },[]);
+    },[isConfig]);
 
     const saveConfig = ({config, version=""}: {config: Config, version?: string}) => {
         const twitchExt = window.Twitch.ext;

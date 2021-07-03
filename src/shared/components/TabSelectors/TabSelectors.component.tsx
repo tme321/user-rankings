@@ -1,12 +1,9 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './TabSelectors.css';
 import { TabSelectorsProps } from './TabSelectors.props'
-import { ColorsContext } from '../../../Context/Colors.context';
 import { TabSelector } from '../TabSelector/TabSelector.component';
 
 export function TabSelectors({tabs}: TabSelectorsProps) {
-    const theme = useContext(ColorsContext);
-
     const tabNames = useMemo(()=>{
         return Object.keys(tabs);
     },[tabs])
@@ -21,16 +18,13 @@ export function TabSelectors({tabs}: TabSelectorsProps) {
         <TabSelector
             key={name} 
             text={name} 
-            color={theme.text} 
-            toggledColor={theme.accent}
             isSelected={name===selectedTab}
             handleSelected={(tabName:string)=>{ setSelectedTab(tabName) }}/>
     ));
     
     return (
         <>
-            <div className="tabs" 
-                style={{ borderColor: theme.accent }}>
+            <div className="tabs">
                 {tabSelectors}
             </div>
             <div className="content">{tabs[selectedTab]}</div>

@@ -1,5 +1,6 @@
 h2.categories-header {
     font-size: 1em;
+    background-color: var(--backgroundColor);
 }
 
 .categories-header div {

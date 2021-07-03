@@ -7,7 +7,11 @@ import { ThemeConfigEditorProps } from './ThemeConfigEditor.props';
 export function ThemeConfigEditor({ 
     title, 
     theme, 
-    colorChangeHandlers }: ThemeConfigEditorProps) {
+    colorChangeHandlers}: ThemeConfigEditorProps) {
+
+    const handleResetClick = () => {
+        colorChangeHandlers.reset();
+    };
         
     return (
         <div className="colors-container" 
@@ -36,7 +40,14 @@ export function ThemeConfigEditor({
                 label="Secondary Text Color:" 
                 color={theme.altText} 
                 labelColor={theme.altText}
-                handleColorChange={colorChangeHandlers.altText}/>            
+                handleColorChange={colorChangeHandlers.altText}/>
+            <div>
+                <button className="reset-btn"
+                    onClick={handleResetClick} 
+                    type="reset">
+                        Reset to Defaults
+                </button>
+            </div>
         </div>
     );
 }

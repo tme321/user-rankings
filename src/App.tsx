@@ -2,46 +2,58 @@ import React, { useEffect, useState } from 'react';
 //import axios from 'axios';
 import './App.css';
 import { TableData } from './App.state';
-import { Loading } from './Views/Loading/Loading.component';
-import { ViewerLayout } from './Views/Viewer/components/ViewerLayout/ViewerLayout.component';
-import { ConfigLayout } from './Views/Config/components/ConfigLayout/ConfigLayout.component';
-import { DashboardLayout } from './Views/Dashboard/components/DashboardLayout/DashboardLayout.component';
-import { ColorsContext, modes } from './Context/Colors.context';
 import { useTwitchPanelExtension } from './shared/hooks/TwitchPanelExtension.hook';
 import { ViewModes } from './shared/hooks/TwitchExtContext.hook';
 import { ConfigModel } from './Config/model/Config.model';
 import { DataState } from './shared/data/data.state';
 import { defaultConfigState } from './Config/defaults/ConfigState';
 import { isAConfig } from './Config/helpers/isAConfig';
+import { LayoutManager } from './components/LayoutManager/LayoutManager.component';
+import { Loading } from './components/Loading/Loading.component';
+import { applyTheme } from './shared/helpers/applyTheme';
+import { parseQueryParams } from './shared/helpers/parseQueryParams';
 
 const defaultTableData: TableData = { tableData: { entries: [] } };
 
 function App() {
 
-    let initialMode: ViewModes = "viewer";
-    switch(window.location.pathname){
-        case "": { initialMode = "viewer"; break; }
-        case "/index.html": { initialMode = "viewer"; break; }
-        case "/config": { initialMode = "config"; break; }
-        case "/config.html": { initialMode = "config"; break; }
-        case "/dashboard": { initialMode = "dashboard"; break; }
-        case "/dashboard.html": { initialMode = "dashboard"; break; }
-    }
+    const params = parseQueryParams();
+
+    let initialMode: ViewModes = params.mode;
+    console.log('initial mode: ', initialMode);
 
     const [data, setData] = useState<TableData>(defaultTableData);
     const [url, setUrl] = useState('/config/user-bits.json');
-    const [auth, config, saveConfig, theme, mode, isLoading] =  
-        useTwitchPanelExtension({
+    const [auth, config, saveConfig, theme, mode, isLoading] = useTwitchPanelExtension({
             mode: initialMode, 
             defaultConfig: defaultConfigState, 
-            isConfig: isAConfig });
+            isConfig: isAConfig 
+    });
+
+    /**
+     * Update the url from the config.
+     */
+    useEffect(()=>{
+        setUrl(config.dataUrl);
+    },[config])
+
+    /**
+     * Update the app theme based on the config and theme context.
+     */
+    useEffect(()=>{
+        applyTheme(config.themes[theme]);
+    },[theme, config]);
+
+    /**
+     * Save a new config to twitch through the Twitch.ext library.
+     * @param newConfig The new config to save to twitch.
+     */
+    const handleSaveConfig = (newConfig: ConfigModel) => {
+        saveConfig({config: newConfig})
+    }
 
     useEffect(() => {
         const fetchData = async () => {
-            //setIsLoading(true);
-
-            //await sleep(1000);
-
             const result = await Promise.resolve<DataState>(
                 require("./test/giftedSubs.test.json")
             );
@@ -49,54 +61,24 @@ function App() {
             setData({ 
                 tableData: result
             });
-            //setIsLoading(false);
         };
 
         fetchData();
     }, [url]);
 
-    const handleSaveConfig = (newConfig: ConfigModel) => {
-        saveConfig({config: newConfig})
-    }
-
-    const renderLayout = (layoutMode: ViewModes, renderConfig: ConfigModel) => {
-        switch(layoutMode) {
-            case 'config': { return (
-                <ConfigLayout 
-                    config={renderConfig} 
-                    handleSaveConfig={handleSaveConfig}/>
-            )}
-            case 'dashboard': { return (
-                <DashboardLayout 
-                    config={renderConfig}
-                    tableData={data.tableData}/>
-            )}
-            case 'viewer': { return (
-                <ViewerLayout 
-                    config={renderConfig} 
-                    tableData={data.tableData}/>
-            )}
-        }
-    }
-
     return (
-        <ColorsContext.Provider value={modes[theme]}>
             <div className={`app-container`}>
             {
                 false? 
                     <Loading/>:
-                    renderLayout(mode, config)
+                    <LayoutManager 
+                        layoutMode={mode} 
+                        renderConfig={config} 
+                        handleSaveConfig={handleSaveConfig} 
+                        tableData={data.tableData}/>
             }
             </div>
-        </ColorsContext.Provider>
     );
 }
-
-
-function sleep(ms: number) {
-// add ms millisecond timeout before promise resolution
-return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 
 export default App;

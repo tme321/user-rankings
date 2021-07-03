@@ -1,17 +1,15 @@
-import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import './ConfigLayout.css'
 import { RadioSelectGroup } from '../RadioSelectGroup/RadioSelectGroup.component';
-import { ColorsContext } from '../../../../Context/Colors.context';
 import { ConfigModel } from '../../../../Config/model/Config.model';
 import { copyConfig } from '../../../../Config/helpers/copyConfig';
 import { ThemeConfigEditor } from '../ThemeConfigEditor/ThemeConfigEditor.component';
 import { HeaderModel } from '../../../../Config/model/Header.model';
 import { ConfigLayoutProps } from './ConfigLayout.props';
 import { RadioGroupItem } from '../RadioSelectGroup/RadioSelectGroup.props';
+import { defaultDarkColors, defaultLightColors } from '../../../../Config/defaults/Colors';
 
 export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
-
-    const theme = useContext(ColorsContext);
 
     const [currentConfig, setConfig] = useState<ConfigModel>(copyConfig(config));
     const [isFormPristine, setFormPristine] = useState(true);
@@ -117,6 +115,17 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
                 });
                 setFormPristine(false);
             },
+            reset: ()=>{
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
+                    newConfig.themes.dark.background = defaultDarkColors.background;
+                    newConfig.themes.dark.accent = defaultDarkColors.accent;
+                    newConfig.themes.dark.text = defaultDarkColors.text;
+                    newConfig.themes.dark.altText = defaultDarkColors.altText;
+                    return newConfig;
+                });
+                setFormPristine(false);
+            }
         },
         light: {
             background: (color: string)=>{ 
@@ -151,6 +160,18 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
                 });
                 setFormPristine(false);
             },
+            reset: ()=>{
+                setConfig((prevConfig)=>{
+                    const newConfig = copyConfig(prevConfig);
+                    newConfig.themes.light.background = defaultLightColors.background;
+                    newConfig.themes.light.accent = defaultLightColors.accent;
+                    newConfig.themes.light.text = defaultLightColors.text;
+                    newConfig.themes.light.altText = defaultLightColors.altText;
+                    return newConfig;
+                });
+                setFormPristine(false);
+            }
+
         }
     }
     
@@ -186,19 +207,14 @@ export function ConfigLayout({config, handleSaveConfig }: ConfigLayoutProps) {
     }]; 
 
     return (
-        <div className="config-layout" 
-            style={{ background: theme.background, color: theme.text }}>
+        <div className="config-layout scroll-bar">
             <form onSubmit={handleSubmit}>
                 <h1>
                     <span>User Rankings Configuration</span>
                     <div style={{ height: "30px"}}>
-                        <button className="submit" 
-                            style={{
-                            background: isFormPristine?"#cccccc":theme.accent, 
-                            color: isFormPristine?"#666666":theme.text,
-                        }}
-                        disabled={isFormPristine}
-                        type="submit">
+                        <button className={"submit"} 
+                            disabled={isFormPristine}
+                            type="submit">
                             Save Config
                         </button>
                     </div>

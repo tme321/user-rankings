@@ -1,4 +1,26 @@
+.edit-container {
+    width: 320px; 
+    overflow-y: scroll; 
+    overflow-x: hidden;
+    max-height: 405px;
+}
+
 .entries {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
+
+.entries span {
+    display: flex; 
+    justify-content: center;
+    font-size: 1em;    
+}
+
+.entries div.columns-header {
+    width: 50%;
+    text-align: center;
+    display: inline-block; 
+    padding-right: 2px;
+}
+

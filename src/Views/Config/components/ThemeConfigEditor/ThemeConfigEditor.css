@@ -22,3 +22,9 @@ h2.theme-title {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.reset-btn {
+    background-color: var(--accentColor);
+    color: var(--textColor);
+    border-radius: 4px;
+}
